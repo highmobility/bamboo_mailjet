@@ -171,7 +171,7 @@ defmodule Bamboo.MailjetAdapterTest do
       from: {"From", "from@foo.com"},
       subject: "My Subject",
     )
-    |> MailjetHelper.template_error_reporting("foo1", "foo1@example.com")
+    |> MailjetHelper.template_error_reporting({"foo1", "foo1@example.com"})
     |> MailjetAdapter.deliver(@config)
 
 
