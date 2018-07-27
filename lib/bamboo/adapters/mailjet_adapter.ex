@@ -41,9 +41,9 @@ defmodule Bamboo.MailjetAdapter do
       %ApiError{message: message}
     end
 
-    def exception(%{params: params, response: response}) do
+    def exception(%{params: params, response: response, status: status}) do
       message = """
-      There was a problem sending the email through the Mailjet API.
+      There was a problem sending the email through the Mailjet API, which returned #{status}
 
       Here is the response:
 
@@ -66,7 +66,7 @@ defmodule Bamboo.MailjetAdapter do
 
     case :hackney.post(url, gen_headers(api_key,api_private_key), body, [:with_body]) do
       {:ok, status, _headers, response} when status > 299 ->
-        raise(ApiError, %{params: body, response: response})
+        raise(ApiError, %{params: body, response: response, status: status})
       {:ok, status, headers, response} ->
         %{status_code: status, headers: headers, body: response}
       {:error, reason} ->
