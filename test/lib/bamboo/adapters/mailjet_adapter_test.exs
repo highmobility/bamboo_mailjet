@@ -166,6 +166,19 @@ defmodule Bamboo.MailjetAdapterTest do
     assert params["vars"] == %{"foo1" => "bar1", "foo2" => "bar2"}
   end
 
+  test "deliver/2 sends template error reporting" do
+    new_email(
+      from: {"From", "from@foo.com"},
+      subject: "My Subject",
+    )
+    |> MailjetHelper.template_error_reporting("foo1", "foo1@example.com")
+    |> MailjetAdapter.deliver(@config)
+
+
+    assert_receive {:fake_mailjet, %{params: params}}
+    assert params["TemplateErrorReporting"] == %{"Name" => "foo1", "Email" => "foo1@example.com"}
+  end
+
   test "raises if the response is not a success" do
     email = new_email(from: "INVALID_EMAIL")
 

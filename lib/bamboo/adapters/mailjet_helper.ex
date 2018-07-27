@@ -48,4 +48,18 @@ defmodule Bamboo.MailjetHelper do
     vars = Map.get(email.private, :mj_vars, %{})
     Email.put_private(email, :mj_vars, Map.put(vars, key, value))
   end
+
+  @doc """
+  Add template error reporting to the email.
+
+  This can be used to set an email address that will receive templating language errors.
+
+  ## Example
+
+      email
+      |> template_error_reporting("Arthur Dent", "arthur_dent@example.com")
+  """
+  def template_error_reporting(email, name, address) do
+    Email.put_private(email, :templateerrorreporting, %{name: name, email: address})
+  end
 end
