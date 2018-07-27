@@ -57,9 +57,9 @@ defmodule Bamboo.MailjetHelper do
   ## Example
 
       email
-      |> template_error_reporting("Arthur Dent", "arthur_dent@example.com")
+      |> template_error_reporting({"Arthur Dent", "arthur_dent@example.com"})
   """
-  def template_error_reporting(email, name, address) do
+  def template_error_reporting(email, {name, address}) do
     Email.put_private(email, :templateerrorreporting, %{name: name, email: address})
   end
 end
