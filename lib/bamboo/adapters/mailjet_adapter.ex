@@ -170,7 +170,7 @@ defmodule Bamboo.MailjetAdapter do
   defp put_vars(body, _email), do: body
 
   defp put_template_error_reporting(body, %Email{private: %{templateerrorreporting: address}}) do
-    Map.put(body, "TemplateErrorReporting", %{"Name" => address.name, "Email" => address.email})
+    Map.put(body, "MJ-TemplateErrorReporting", %{"Name" => address.name, "Email" => address.email})
   end
   defp put_template_error_reporting(body, _email), do: body
 
