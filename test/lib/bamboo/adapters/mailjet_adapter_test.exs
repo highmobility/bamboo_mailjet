@@ -176,7 +176,7 @@ defmodule Bamboo.MailjetAdapterTest do
 
 
     assert_receive {:fake_mailjet, %{params: params}}
-    assert params["TemplateErrorReporting"] == %{"Name" => "foo1", "Email" => "foo1@example.com"}
+    assert params["MJ-TemplateErrorReporting"] == %{"Name" => "foo1", "Email" => "foo1@example.com"}
   end
 
   test "raises if the response is not a success" do
