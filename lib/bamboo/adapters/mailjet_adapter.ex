@@ -117,6 +117,7 @@ defmodule Bamboo.MailjetAdapter do
     |> put_template_id(email)
     |> put_template_language(email)
     |> put_vars(email)
+    |> put_template_error_reporting(email)
   end
 
   defp put_from(body, %Email{from: address}) when is_binary(address), do: Map.put(body, :fromemail, address)
@@ -167,6 +168,11 @@ defmodule Bamboo.MailjetAdapter do
 
   defp put_vars(body, %Email{private: %{mj_vars: vars}}), do: Map.put(body, "vars", vars)
   defp put_vars(body, _email), do: body
+
+  defp put_template_error_reporting(body, %Email{private: %{templateerrorreporting: address}}) do
+    Map.put(body, "TemplateErrorReporting", %{"Name" => address.name, "Email" => address.email})
+  end
+  defp put_template_error_reporting(body, _email), do: body
 
   defp recipients(new_recipients) do
     new_recipients
